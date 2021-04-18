@@ -1,11 +1,12 @@
 import * as React from "react";
-import { Link } from "gatsby";
+import { graphql, Link } from "gatsby";
 import { StaticImage } from "gatsby-plugin-image";
 
 import Layout from "../components/layout";
 import Seo from "../components/seo";
 
-const Home = () => {
+const Home = ({ data }) => {
+  const fileds = data.mdx.frontmatter;
   return (
     <Layout>
       <section className="hero container animate__animated ">
@@ -15,19 +16,32 @@ const Home = () => {
         <div className="hero__wrapper undefined">
           <h2 className="title title--hero hero__title">
             <span className="title title--name hero__title--name animate__delay-12 animate__animated animate__fadeInBottomLeft">
-              Edward
+              {fileds.name}
             </span>
             <span className="title title--surname hero__title--surname animate__animated animate__delay-13 animate__animated animate__fadeInBottomLeft">
-              Arechwa
+            {fileds.surname}
             </span>
           </h2>
           <p className="text text--hero hero__text animate__animated animate__delay-14 animate__animated animate__fadeInBottomLeft">
-            junior front-end developer
+            {fileds.subtitle}
           </p>
         </div>
       </section>
     </Layout>
   );
 };
+
+export const query = graphql`
+  query($slug: String!) {
+    mdx(frontmatter: { slug: { eq: $slug } }) {
+      id
+      frontmatter {
+        surname
+        subtitle
+        name
+      }
+    }
+  }
+`;
 
 export default Home;

@@ -1,6 +1,9 @@
 ---
 title: "Edward Arechwa, junior front-end developer"
-slug: "/"
+slug: "home"
 type: "page"
-template: "About"
+template: "Home"
+name: "Edward"
+surname: "Arechwa"
+subtitle: "junior front-end developer"
 ---
