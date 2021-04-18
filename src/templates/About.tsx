@@ -1,11 +1,19 @@
+import { graphql } from "gatsby";
 import * as React from "react";
 import Layout from "../components/layout";
 
-const About = () => {
+const About = ({data}) => {
+  const fields = data.mdx.frontmatter;
+  console.log(fields.title);
+  const title = fields.title.split(' ').map((item, index) => {
+    return <span className="title__letter title__letter--scale" key={index}>{item}</span>
+  })
+  console.log(title);
   return (
     <Layout>
       <section className="about container">
         <h2 className="title title--main title--about about__title">
+          {title}
           <span className="row  animate__animated animate__rollIn animate__delay-0">
             <span className="title__letter title__letter--scale">a</span>
             <span className="title__letter title__letter--scale">b</span>
@@ -21,20 +29,28 @@ const About = () => {
         </h2>
         <div className="about__wrapper">
           <p className="text text--about about__text animate__animated animate__rollIn animate__delay-2">
-            I am a junior front-end developer. I create websites and
-            web-applications using modern technologies based on modern
-            web-standards.
+            {fields.text1}
           </p>
           <br />
           <p className="text text--about about__text animate__animated animate__rollIn animate__delay-2">
-            I am always up to date with the latest trends in web-technologies
-            and bestPracticed, and I carry out the tasks entrusted to me
-            accurately and in time
+            {fields.text2}
           </p>
         </div>
       </section>
     </Layout>
   );
 };
+
+export const query = graphql`
+query($slug: String!) {
+  mdx(frontmatter: {slug: {eq: $slug}}) {
+    frontmatter {
+      title
+      text1
+      text2
+    }
+  }
+}
+`
 
 export default About;
